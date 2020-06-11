@@ -17,6 +17,67 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("starting-screen").style.visibility = "hidden"
         }
 
+    // Target that the player needs to reach
+    function CrawlerTarget() {
+        this.x = Math.floor(Math.random() * (canvas.width -25))
+        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.color = "black"
+        this.width = 25
+        this.height = 25
+        this.render = function() {
+            ctx.fillStyle = this.color
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+
+    let target = new CrawlerTarget()
+
+    target.render()
+
+    // Player object
+    function CrawlerPlayer() {
+        this.x = Math.floor(Math.random() * (canvas.width -25))
+        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.color = "black"
+        this.render = function() {
+            ctx.fillStyle = this.color
+            ctx.beginPath()
+            ctx.arc(this.x, this.y, 12.5 , 0, Math.PI*2)
+            ctx.closePath()
+            ctx.fill()
+        }
+    }
+
+    let player = new CrawlerPlayer()
+
+    player.render()
+
+    // Player movement
+
+    const movementHandler = (e) => {
+        console.log(e.key)
+        switch(e.key) {
+            case "w":
+                // player y decrement
+                player.y -= 6
+                break
+            case "d":
+                // player x increment
+                player.x += 6
+                break
+            case "s":
+                // player y increment
+                player.y += 6
+                break
+            case "a":
+                // player x decrement
+                player.x -= 6
+                break
+        }
+    }
+    
+    document.addEventListener("keydown", movementHandler)
+
     // Square constructor
     function CrawlerSquare(color, width, height) {
         this.x = Math.floor(Math.random() * (canvas.width -25))
@@ -111,6 +172,10 @@ document.addEventListener('DOMContentLoaded', function() {
         redSquare.y += redSquare.dy
 
         redSquare.render()
+
+        target.render()
+
+        player.render()
 
     }
 
