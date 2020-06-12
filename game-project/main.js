@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    let canvas = document.querySelector("canvas")
-        canvas.width = 800
-        canvas.height = 500
+    let firstCanvas = document.getElementById("first-canvas")
+        firstCanvas.width = 800
+        firstCanvas.height = 500
 
-    let ctx = canvas.getContext("2d")
+    let ctx = firstCanvas.getContext("2d")
+
+    let secondCanvas = document.getElementById("second-canvas")
+
+    let ctxTwo = secondCanvas.getContext("2d")
 
     let topRow = document.getElementById("player-pattern")
 
@@ -14,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Square constructor, takes color as input
     function CrawlerSquare(color, id) {
-        this.x = Math.floor(Math.random() * (canvas.width -25))
-        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.x = Math.floor(Math.random() * (firstCanvas.width -25))
+        this.y = Math.floor(Math.random() * (firstCanvas.height - 25))
         this.color = color
         this.dx = 1
         this.dy = 1
@@ -41,8 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Circle constructor, takes color as input
     function CrawlerCircle(color, id) {
-        this.x = Math.floor(Math.random() * (canvas.width - 25))
-        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.x = Math.floor(Math.random() * (firstCanvas.width - 25))
+        this.y = Math.floor(Math.random() * (firstCanvas.height - 25))
         this.color = color
         this.dx = 1
         this.dy = 1
@@ -70,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Triangle constructor, takes color as input
     function CrawlerTriangle(color, id) {
-        this.x = Math.floor(Math.random() * (canvas.width - 25))
-        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.x = Math.floor(Math.random() * (firstCanvas.width - 25))
+        this.y = Math.floor(Math.random() * (firstCanvas.height - 25))
         this.color = color
         this.dx = 1
         this.dy = 1
@@ -116,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 computerArray.push(randomChoice)
             }
         }
+        ctxTwo.
         console.log(computerArray)
     }
         
@@ -141,13 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     console.log("Player loses!")
                     topRow.innerText = "Player loses!"
-                    setTimeout(location.reload, 3000)
                 }
             }
             if (score === 5) {
                 console.log("Player wins")
                 topRow.innerText = "Player wins!"
-                setTimeout(location.reload, 3000)
             }
         }
     }
@@ -182,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    canvas.addEventListener("click", detectRedClick)
+    firstCanvas.addEventListener("click", detectRedClick)
 
     // Registers coordinates of mouse click,
     // checks if they match coordinates of a blue shape
@@ -214,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    canvas.addEventListener("click", detectBlueClick)
+    firstCanvas.addEventListener("click", detectBlueClick)
 
     // Registers coordinates of mouse click,
     // checks if they match coordinates of a green shape
@@ -246,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    canvas.addEventListener("click", detectGreenClick)
+    firstCanvas.addEventListener("click", detectGreenClick)
 
     // Registers coordinates of mouse click,
     // checks if they match coordinates of a yellow shape
@@ -278,15 +281,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    canvas.addEventListener("click", detectYellowClick)
+    firstCanvas.addEventListener("click", detectYellowClick)
 
     console.log(playerArray)
 
     function moveRedSquare() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.clearRect(0, 0, firstCanvas.width, firstCanvas.height)
 
         if (redSquare.dx === 1) {
-            if (redSquare.x + redSquare.width >= canvas.width) {
+            if (redSquare.x + redSquare.width >= firstCanvas.width) {
                 redSquare.dx += -1
             }
         } else if (redSquare.dx === -1) {
@@ -294,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 redSquare.dx += 1
             }
         }
-        if (redSquare.x + redSquare.width >= canvas.width) {
+        if (redSquare.x + redSquare.width >= firstCanvas.width) {
             redSquare.dx = -1
         }
 
@@ -303,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (redSquare.dy === 1) {
-            if (redSquare.y + redSquare.height >= canvas.height) {
+            if (redSquare.y + redSquare.height >= firstCanvas.height) {
                 redSquare.dy += -1
             }
         } else if (redSquare.dy === -1) {
@@ -312,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (redSquare.y + redSquare.height >= canvas.height) {
+        if (redSquare.y + redSquare.height >= firstCanvas.height) {
             redSquare.dy = -1
         }
 
@@ -335,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveBlueSquare() {
 
         if (blueSquare.dx === 1) {
-            if (blueSquare.x + blueSquare.width >= canvas.width) {
+            if (blueSquare.x + blueSquare.width >= firstCanvas.width) {
                 blueSquare.dx += -1
             }
         } else if (blueSquare.dx === -1) {
@@ -343,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 blueSquare.dx += 1
             }
         }
-        if (blueSquare.x + blueSquare.width >= canvas.width) {
+        if (blueSquare.x + blueSquare.width >= firstCanvas.width) {
             blueSquare.dx = -1
         }
 
@@ -352,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (blueSquare.dy === 1) {
-            if (blueSquare.y + blueSquare.height >= canvas.height) {
+            if (blueSquare.y + blueSquare.height >= firstCanvas.height) {
                 blueSquare.dy += -1
             }
         } else if (blueSquare.dy === -1) {
@@ -361,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (blueSquare.y + blueSquare.height >= canvas.height) {
+        if (blueSquare.y + blueSquare.height >= firstCanvas.height) {
             blueSquare.dy = -1
         }
 
@@ -379,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveGreenSquare() {
 
         if (greenSquare.dx === 1) {
-            if (greenSquare.x + greenSquare.width >= canvas.width) {
+            if (greenSquare.x + greenSquare.width >= firstCanvas.width) {
                 greenSquare.dx += -1
             }
         } else if (greenSquare.dx === -1) {
@@ -387,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 greenSquare.dx += 1
             }
         }
-        if (greenSquare.x + greenSquare.width >= canvas.width) {
+        if (greenSquare.x + greenSquare.width >= firstCanvas.width) {
             greenSquare.dx = -1
         }
 
@@ -396,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (greenSquare.dy === 1) {
-            if (greenSquare.y + greenSquare.height >= canvas.height) {
+            if (greenSquare.y + greenSquare.height >= firstCanvas.height) {
                 greenSquare.dy += -1
             }
         } else if (greenSquare.dy === -1) {
@@ -405,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (greenSquare.y + greenSquare.height >= canvas.height) {
+        if (greenSquare.y + greenSquare.height >= firstCanvas.height) {
             greenSquare.dy = -1
         }
 
@@ -423,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveYellowSquare() {
 
         if (yellowSquare.dx === 1) {
-            if (yellowSquare.x + yellowSquare.width >= canvas.width) {
+            if (yellowSquare.x + yellowSquare.width >= firstCanvas.width) {
                 yellowSquare.dx += -1
             }
         } else if (yellowSquare.dx === -1) {
@@ -431,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 yellowSquare.dx += 1
             }
         }
-        if (yellowSquare.x + yellowSquare.width >= canvas.width) {
+        if (yellowSquare.x + yellowSquare.width >= firstCanvas.width) {
             yellowSquare.dx = -1
         }
 
@@ -440,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (yellowSquare.dy === 1) {
-            if (yellowSquare.y + yellowSquare.height >= canvas.height) {
+            if (yellowSquare.y + yellowSquare.height >= firstCanvas.height) {
                 yellowSquare.dy += -1
             }
         } else if (yellowSquare.dy === -1) {
@@ -449,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (yellowSquare.y + yellowSquare.height >= canvas.height) {
+        if (yellowSquare.y + yellowSquare.height >= firstCanvas.height) {
             yellowSquare.dy = -1
         }
 
@@ -467,7 +470,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveRedCircle() {
 
         if (redCircle.dx === 1) {
-            if (redCircle.x + 12.5 >= canvas.width) {
+            if (redCircle.x + 12.5 >= firstCanvas.width) {
                 redCircle.dx += -1
             }
         } else if (redCircle.dx === -1) {
@@ -475,7 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 redCircle.dx += 1
             }
         }
-        if (redCircle.x + 12.5 >= canvas.width) {
+        if (redCircle.x + 12.5 >= firstCanvas.width) {
             redCircle.dx = -1
         }
 
@@ -484,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (redCircle.dy === 1) {
-            if (redCircle.y + 12.5 >= canvas.height) {
+            if (redCircle.y + 12.5 >= firstCanvas.height) {
                 redCircle.dy += -1
             }
         } else if (redCircle.dy === -1) {
@@ -493,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (redCircle.y + 12.5 >= canvas.height) {
+        if (redCircle.y + 12.5 >= firstCanvas.height) {
             redCircle.dy = -1
         }
 
@@ -511,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveBlueCircle() {
 
         if (blueCircle.dx === 1) {
-            if (blueCircle.x + 12.5 >= canvas.width) {
+            if (blueCircle.x + 12.5 >= firstCanvas.width) {
                 blueCircle.dx += -1
             }
         } else if (blueCircle.dx === -1) {
@@ -519,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 blueCircle.dx += 1
             }
         }
-        if (blueCircle.x + 12.5 >= canvas.width) {
+        if (blueCircle.x + 12.5 >= firstCanvas.width) {
             blueCircle.dx = -1
         }
 
@@ -528,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (blueCircle.dy === 1) {
-            if (blueCircle.y + 12.5 >= canvas.height) {
+            if (blueCircle.y + 12.5 >= firstCanvas.height) {
                 blueCircle.dy += -1
             }
         } else if (blueCircle.dy === -1) {
@@ -537,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (blueCircle.y + 12.5 >= canvas.height) {
+        if (blueCircle.y + 12.5 >= firstCanvas.height) {
             blueCircle.dy = -1
         }
 
@@ -555,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveGreenCircle() {
 
         if (greenCircle.dx === 1) {
-            if (greenCircle.x + 12.5 >= canvas.width) {
+            if (greenCircle.x + 12.5 >= firstCanvas.width) {
                 greenCircle.dx += -1
             }
         } else if (greenCircle.dx === -1) {
@@ -563,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 greenCircle.dx += 1
             }
         }
-        if (greenCircle.x + 12.5 >= canvas.width) {
+        if (greenCircle.x + 12.5 >= firstCanvas.width) {
             greenCircle.dx = -1
         }
 
@@ -572,7 +575,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (greenCircle.dy === 1) {
-            if (greenCircle.y + 12.5 >= canvas.height) {
+            if (greenCircle.y + 12.5 >= firstCanvas.height) {
                 greenCircle.dy += -1
             }
         } else if (greenCircle.dy === -1) {
@@ -581,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (greenCircle.y + 12.5 >= canvas.height) {
+        if (greenCircle.y + 12.5 >= firstCanvas.height) {
             greenCircle.dy = -1
         }
 
@@ -599,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveYellowCircle() {
 
         if (yellowCircle.dx === 1) {
-            if (yellowCircle.x + 12.5 >= canvas.width) {
+            if (yellowCircle.x + 12.5 >= firstCanvas.width) {
                 yellowCircle.dx += -1
             }
         } else if (yellowCircle.dx === -1) {
@@ -607,7 +610,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 yellowCircle.dx += 1
             }
         }
-        if (yellowCircle.x + 12.5 >= canvas.width) {
+        if (yellowCircle.x + 12.5 >= firstCanvas.width) {
             yellowCircle.dx = -1
         }
 
@@ -616,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (yellowCircle.dy === 1) {
-            if (yellowCircle.y + 12.5 >= canvas.height) {
+            if (yellowCircle.y + 12.5 >= firstCanvas.height) {
                 yellowCircle.dy += -1
             }
         } else if (yellowCircle.dy === -1) {
@@ -625,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (yellowCircle.y + 12.5 >= canvas.height) {
+        if (yellowCircle.y + 12.5 >= firstCanvas.height) {
             yellowCircle.dy = -1
         }
 
@@ -643,7 +646,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveRedTriangle() {
 
         if (redTriangle.dx === 1) {
-            if (redTriangle.x + 25 >= canvas.width) {
+            if (redTriangle.x + 25 >= firstCanvas.width) {
                 redTriangle.dx += -1
             }
         } else if (redTriangle.dx === -1) {
@@ -651,7 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 redTriangle.dx += 1
             }
         }
-        if (redTriangle.x + 25 >= canvas.width) {
+        if (redTriangle.x + 25 >= firstCanvas.width) {
             redTriangle.dx = -1
         }
 
@@ -660,7 +663,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (redTriangle.dy === 1) {
-            if (redTriangle.y + 25 >= canvas.height) {
+            if (redTriangle.y + 25 >= firstCanvas.height) {
                 redTriangle.dy += -1
             }
         } else if (redTriangle.dy === -1) {
@@ -669,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (redTriangle.y + 25 >= canvas.height) {
+        if (redTriangle.y + 25 >= firstCanvas.height) {
             redTriangle.dy = -1
         }
 
@@ -687,7 +690,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveBlueTriangle() {
 
         if (blueTriangle.dx === 1) {
-            if (blueTriangle.x + 25 >= canvas.width) {
+            if (blueTriangle.x + 25 >= firstCanvas.width) {
                 blueTriangle.dx += -1
             }
         } else if (blueTriangle.dx === -1) {
@@ -695,7 +698,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 blueTriangle.dx += 1
             }
         }
-        if (blueTriangle.x + 25 >= canvas.width) {
+        if (blueTriangle.x + 25 >= firstCanvas.width) {
             blueTriangle.dx = -1
         }
 
@@ -704,7 +707,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (blueTriangle.dy === 1) {
-            if (blueTriangle.y + 25 >= canvas.height) {
+            if (blueTriangle.y + 25 >= firstCanvas.height) {
                 blueTriangle.dy += -1
             }
         } else if (blueTriangle.dy === -1) {
@@ -713,7 +716,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (blueTriangle.y + 25 >= canvas.height) {
+        if (blueTriangle.y + 25 >= firstCanvas.height) {
             blueTriangle.dy = -1
         }
 
@@ -731,7 +734,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveGreenTriangle() {
 
         if (greenTriangle.dx === 1) {
-            if (greenTriangle.x + 25 >= canvas.width) {
+            if (greenTriangle.x + 25 >= firstCanvas.width) {
                 greenTriangle.dx += -1
             }
         } else if (greenTriangle.dx === -1) {
@@ -739,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 greenTriangle.dx += 1
             }
         }
-        if (greenTriangle.x + 25 >= canvas.width) {
+        if (greenTriangle.x + 25 >= firstCanvas.width) {
             greenTriangle.dx = -1
         }
 
@@ -748,7 +751,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (greenTriangle.dy === 1) {
-            if (greenTriangle.y + 25 >= canvas.height) {
+            if (greenTriangle.y + 25 >= firstCanvas.height) {
                 greenTriangle.dy += -1
             }
         } else if (greenTriangle.dy === -1) {
@@ -757,7 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (greenTriangle.y + 25 >= canvas.height) {
+        if (greenTriangle.y + 25 >= firstCanvas.height) {
             greenTriangle.dy = -1
         }
 
@@ -775,7 +778,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function moveYellowTriangle() {
 
         if (yellowTriangle.dx === 1) {
-            if (yellowTriangle.x + 25 >= canvas.width) {
+            if (yellowTriangle.x + 25 >= firstCanvas.width) {
                 yellowTriangle.dx += -1
             }
         } else if (yellowTriangle.dx === -1) {
@@ -783,7 +786,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 yellowTriangle.dx += 1
             }
         }
-        if (yellowTriangle.x + 25 >= canvas.width) {
+        if (yellowTriangle.x + 25 >= firstCanvas.width) {
             yellowTriangle.dx = -1
         }
 
@@ -792,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (yellowTriangle.dy === 1) {
-            if (yellowTriangle.y + 25 >= canvas.height) {
+            if (yellowTriangle.y + 25 >= firstCanvas.height) {
                 yellowTriangle.dy += -1
             }
         } else if (yellowTriangle.dy === -1) {
@@ -801,7 +804,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        if (yellowTriangle.y + 25 >= canvas.height) {
+        if (yellowTriangle.y + 25 >= firstCanvas.height) {
             yellowTriangle.dy = -1
         }
 
