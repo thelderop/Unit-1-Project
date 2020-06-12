@@ -6,28 +6,156 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let ctx = canvas.getContext("2d")
 
+    let topRow = document.getElementById("player-pattern")
+
+    // Starting screen starts visible. Game screen starts hidden
+    document.getElementById("game-screen").style.visibiliy = "visible"
+    document.getElementById("starting-screen").style.visibility = "hidden"
+
+    // Square constructor, takes color as input
+    function CrawlerSquare(color, id) {
+        this.x = Math.floor(Math.random() * (canvas.width -25))
+        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.color = color
+        this.dx = 1
+        this.dy = 1
+        this.id = id
+        this.width = 25
+        this.height = 25
+        this.render = function() {
+            ctx.fillStyle = this.color
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+    
+    // Calls CrawlerSquare for four different colors
+    let redSquare = new CrawlerSquare("red", "1")
+    let blueSquare = new CrawlerSquare("blue", "2")
+    let greenSquare = new CrawlerSquare("green", "3")
+    let yellowSquare = new CrawlerSquare("yellow", "4")
+    
+    redSquare.render()
+    blueSquare.render()
+    greenSquare.render()
+    yellowSquare.render()
+
+    // Circle constructor, takes color as input
+    function CrawlerCircle(color, id) {
+        this.x = Math.floor(Math.random() * (canvas.width - 25))
+        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.color = color
+        this.dx = 1
+        this.dy = 1
+        this.id = id
+        this.render = function() {
+            ctx.fillStyle = this.color
+            ctx.beginPath()
+            ctx.arc(this.x, this.y, 12.5 , 0, Math.PI*2)
+            ctx.closePath()
+            ctx.fill()
+        }
+
+    }
+
+    // Calls CrawlerCircle for four different colors
+    let redCircle = new CrawlerCircle("red", "5")
+    let blueCircle = new CrawlerCircle("blue", "6")
+    let greenCircle = new CrawlerCircle("green", "7")
+    let yellowCircle = new CrawlerCircle("yellow", "8")
+
+    redCircle.render()
+    blueCircle.render()
+    greenCircle.render()
+    yellowCircle.render()
+
+    // Triangle constructor, takes color as input
+    function CrawlerTriangle(color, id) {
+        this.x = Math.floor(Math.random() * (canvas.width - 25))
+        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.color = color
+        this.dx = 1
+        this.dy = 1
+        this.id = id
+        this.render = function() {
+            ctx.fillStyle = this.color
+            ctx.beginPath()
+            ctx.moveTo(this.x, this.y)
+            ctx.lineTo(this.x, this.y + 25)
+            ctx.lineTo(this.x + 25, this.y + 25)
+            ctx.closePath()
+            ctx.fill()
+        }
+    }
+    
+    // Calls CrawlerTriangle for four different colors
+    let redTriangle = new CrawlerTriangle("red", "9")
+    let blueTriangle = new CrawlerTriangle("blue", "10")
+    let greenTriangle = new CrawlerTriangle("green", "11")
+    let yellowTriangle = new CrawlerTriangle("yellow", "12")
+    
+    redTriangle.render()
+    blueTriangle.render()
+    greenTriangle.render()
+    yellowTriangle.render()
+
     let computerArray = []
     let playerArray = []
-
-    let startingTime = 30
-    let remainingTime = 0
-
-    document.getElementById("game-screen").style.visibiliy = "hidden"
-    document.getElementById("starting-screen").style.visibility = "visible"
+    let gameArray = [redSquare, blueSquare, greenSquare, yellowSquare,
+                    redCircle, blueCircle, greenCircle, yellowCircle,
+                    redTriangle, blueTriangle, greenTriangle, yellowTriangle]
 
     let startButton = document.querySelector("button")
-        startButton.addEventListener("click", startGame())
+    startButton.addEventListener("click", startGame())
+
+    // Computer randomly selects five elements (shapes) of gameArray and stores them in computerArray
+    function computerChoice() {
+        // Checks to make sure there are no repeated elements
+        while (computerArray.length < 5) {
+            let randomChoice = gameArray[Math.floor(Math.random() * gameArray.length)]
+            if (!computerArray.includes(randomChoice)) {
+                computerArray.push(randomChoice)
+            }
+        }
+        console.log(computerArray)
+    }
         
+    // Hides starting screen, reveals game screen, calls computerChoice
     function startGame() {
             document.getElementById("game-screen").style.visibility = "visible"
             document.getElementById("starting-screen").style.visibility = "hidden"
+
+            computerChoice()
         }
 
-    // function timer() {
-    //     remainingTime = startingTime
-    //     remainingTime--
-    // }
+    // Check if player array length equals length of computer array
+    // If they are same length, compare them
+    // If they have the same elements in the same positions
+    // That's a win condition. Display text, wait 3 seconds, reload page
+    // If not, that's a loss condition. Display text, wait 3 seconds, reload page
+    function endGame() {
+        if (playerArray.length === 5) {
+            let score = 0
+            for (i = 0; i < 5; i++) {
+                if (playerArray[i].id === computerArray[i].id) {
+                    score++
+                } else {
+                    console.log("Player loses!")
+                    topRow.innerText = "Player loses!"
+                    setTimeout(location.reload, 3000)
+                }
+            }
+            if (score === 5) {
+                console.log("Player wins")
+                topRow.innerText = "Player wins!"
+                setTimeout(location.reload, 3000)
+            }
+        }
+    }
 
+    // Registers coordinates of mouse click,
+    // checks if they match coordinates of a red shape
+    // Stops the movement of that shape
+    // Stores the shape in playerArray
     function detectRedClick(e) {
         let x = e.offsetX
         let y = e.offsetY
@@ -50,10 +178,16 @@ document.addEventListener('DOMContentLoaded', function() {
             playerArray.push(redTriangle)
         }
 
+        endGame()
+
     }
 
     canvas.addEventListener("click", detectRedClick)
 
+    // Registers coordinates of mouse click,
+    // checks if they match coordinates of a blue shape
+    // Stops the movement of that shape
+    // Stores the shape in playerArray
     function detectBlueClick(e) {
         let x = e.offsetX
         let y = e.offsetY
@@ -76,10 +210,16 @@ document.addEventListener('DOMContentLoaded', function() {
             playerArray.push(blueTriangle)
         }
 
+        endGame()
+
     }
 
     canvas.addEventListener("click", detectBlueClick)
 
+    // Registers coordinates of mouse click,
+    // checks if they match coordinates of a green shape
+    // Stops the movement of that shape
+    // Stores the shape in playerArray
     function detectGreenClick(e) {
         let x = e.offsetX
         let y = e.offsetY
@@ -102,10 +242,16 @@ document.addEventListener('DOMContentLoaded', function() {
             playerArray.push(greenTriangle)
         }
 
+        endGame()
+
     }
 
     canvas.addEventListener("click", detectGreenClick)
 
+    // Registers coordinates of mouse click,
+    // checks if they match coordinates of a yellow shape
+    // Stops the movement of that shape
+    // Stores the shape in playerArray
     function detectYellowClick(e) {
         let x = e.offsetX
         let y = e.offsetY
@@ -128,103 +274,15 @@ document.addEventListener('DOMContentLoaded', function() {
             playerArray.push(yellowTriangle)
         }
 
+        endGame()
+
     }
 
     canvas.addEventListener("click", detectYellowClick)
-    
-    // Square constructor
-    function CrawlerSquare(color, width, height) {
-        this.x = Math.floor(Math.random() * (canvas.width -25))
-        this.y = Math.floor(Math.random() * (canvas.height - 25))
-        this.color = color
-        this.dx = 1
-        this.dy = 1
-        this.width = width
-        this.height = height
-        // this.clicked = function() {
-        //     this.dx = 0
-        //     this.dy = 0
-        // }
-        this.render = function() {
-            ctx.fillStyle = this.color
-            ctx.fillRect(this.x, this.y, this.width, this.height)
-        }
-    }
 
-    let redSquare = new CrawlerSquare("red", 25, 25)
-    let blueSquare = new CrawlerSquare("blue", 25, 25)
-    let greenSquare = new CrawlerSquare("green", 25, 25)
-    let yellowSquare = new CrawlerSquare("yellow", 25, 25)
-
-    redSquare.render()
-    blueSquare.render()
-    greenSquare.render()
-    yellowSquare.render()
-
-    // Circle constructor
-    function CrawlerCircle(color) {
-        this.x = Math.floor(Math.random() * (canvas.width - 25))
-        this.y = Math.floor(Math.random() * (canvas.height - 25))
-        this.color = color
-        this.dx = 1
-        this.dy = 1
-        this.clicked = function() {
-            this.dx = 0
-            this.dy = 0
-        }
-        this.render = function() {
-                ctx.fillStyle = this.color
-                ctx.beginPath()
-                ctx.arc(this.x, this.y, 12.5 , 0, Math.PI*2)
-                ctx.closePath()
-                ctx.fill()
-        }
-
-    }
-    let redCircle = new CrawlerCircle("red")
-    let blueCircle = new CrawlerCircle("blue")
-    let greenCircle = new CrawlerCircle("green")
-    let yellowCircle = new CrawlerCircle("yellow")
-
-    redCircle.render()
-    blueCircle.render()
-    greenCircle.render()
-    yellowCircle.render()
-
-    // Triangle constructor
-    function CrawlerTriangle(color) {
-        this.x = Math.floor(Math.random() * (canvas.width - 25))
-        this.y = Math.floor(Math.random() * (canvas.height - 25))
-        this.color = color
-        this.dx = 1
-        this.dy = 1
-        this.clicked = function() {
-            this.dx = 0
-            this.dy = 0
-        }
-        this.render = function() {
-            ctx.fillStyle = this.color
-            ctx.beginPath()
-            ctx.moveTo(this.x, this.y)
-            ctx.lineTo(this.x, this.y + 25)
-            ctx.lineTo(this.x + 25, this.y + 25)
-            ctx.closePath()
-            ctx.fill()
-        }
-    }
-
-    let redTriangle = new CrawlerTriangle("red")
-    let blueTriangle = new CrawlerTriangle("blue")
-    let greenTriangle = new CrawlerTriangle("green")
-    let yellowTriangle = new CrawlerTriangle("yellow")
-
-    redTriangle.render()
-    blueTriangle.render()
-    greenTriangle.render()
-    yellowTriangle.render()
+    console.log(playerArray)
 
     function moveRedSquare() {
-
         ctx.clearRect(0, 0, canvas.width, canvas.height)
 
         if (redSquare.dx === 1) {
@@ -774,175 +832,3 @@ document.addEventListener('DOMContentLoaded', function() {
     let gameLoopYellowTriangle = setInterval(moveYellowTriangle, 15)
 
 })
-
-// ------ ARCHIVE ------
-// let redTriangleUp = document.getElementById("red-triangle-up")
-// let redTriangleDown = document.getElementById("red-triangle-down")
-// let redCircle = document.getElementById("red-circle")
-// let redSquare = document.getElementById("red-square")
-
-// let blueTriangleUp = document.getElementById("blue-triangle-up")
-// let blueTriangleDown = document.getElementById("blue-triangle-down")
-// let blueCircle = document.getElementById("blue-circle")
-// let blueSquare = document.getElementById("blue-square")
-
-// let greenTriangleUp = document.getElementById("green-triangle-up")
-// let greenTriangleDown = document.getElementById("green-triangle-down")
-// let greenCircle = document.getElementById("green-circle")
-// let greenSquare = document.getElementById("green-square")
-
-// let yellowTriangleUp = document.getElementById("yellow-triangle-up")
-// let yellowTriangleDown = document.getElementById("yellow-triangle-down")
-// let yellowCircle = document.getElementById("yellow-circle")
-// let yellowSquare = document.getElementById("yellow-square")
-
-        // ctx.beginPath()
-        // ctx.arc(Math.floor(Math.random() * (canvas.width -25)),
-        // Math.floor(Math.random() * (canvas.height - 25)),
-        // 12.5, 0, 2 * Math.PI)
-        // ctx.closePath()
-        // this.color = color
-        // this.alive = true
-        // this.render = function() {
-        //     ctx.fillStyle = this.color
-        // }
-
-        // function moveSquare() {
-        //     ctx.clearRect(0, 0, canvas.width, canvas.height)
-        //     // Border collision detection and direction change
-        //     if((this.x + this.width) > canvas.width) {
-        //         this.dx = -this.dx
-        //     }
-
-        //     if((this.x - this.width) < 0) {
-        //         this.dx = -this.dx
-        //     }
-
-        //     if((this.y + this.height) > canvas.height) {
-        //         this.dy = -this.dy
-        //     }
-
-        //     if((this.y - this.height) < 0) {
-        //         this.dy = -this.dy
-        //     }
-        //     this.x += this.dx
-        //     this.y += this.dy
-        // }
-        // moveSquare()
-
-        // function borderCollision() {
-        //     if (this.x > canvas.width) {
-        //         this.dx = -this.dx
-        //     }
-    
-        //     if (this.x < 0) {
-        //         this.dx = -this.dx
-        //     }
-    
-        //     if (this.y > canvas.height) {
-        //         this.dy = -this.dy
-        //     }
-    
-        //     if (this.y < 0) {
-        //         this.dy = -this.dy
-        //     }
-        // }
-    
-        // borderCollision()
-
-        // redSquare.x += this.dx * .1
-        // redSquare.y += this.dy *.1
-
-        // blueSquare.x += this.dx
-        // blueSquare.y += this.dy
-
-        // greenSquare.x += this.dx
-        // greenSquare.y += this.dy
-
-        // yellowSquare.x += this.dx
-        // yellowSquare.y += this.dy
-
-        // redCircle.x += this.dx
-        // redCircle.y += this.dy
-
-        // blueCircle.x += this.dx
-        // blueCircle.y += this.dy
-
-        // greenCircle.x += this.dx
-        // greenCircle.y += this.dy
-
-        // yellowCircle.x += this.dx
-        // yellowCircle.y += this.dy
-
-        // if (redSquare.x > canvas.width) {
-        //     this.dx = -this.dx
-        // }
-
-        // if (redSquare.x < 0) {
-        //     this.dx = -this.dx
-        // }
-
-        // if (redSquare.y > canvas.height) {
-        //     this.dy = -this.dy
-        // }
-
-        // if (redSquare.y < 0) {
-        //     this.dy = -this.dy
-        // }
-
-            // Target that the player needs to reach
-    // function CrawlerTarget() {
-    //     this.x = Math.floor(Math.random() * (canvas.width -25))
-    //     this.y = Math.floor(Math.random() * (canvas.height - 25))
-    //     this.color = "black"
-    //     this.width = 25
-    //     this.height = 25
-    //     this.render = function() {
-    //         ctx.fillStyle = this.color
-    //         ctx.fillRect(this.x, this.y, this.width, this.height)
-    //     }
-    // }
-
-    // let target = new CrawlerTarget()
-
-    // target.render()
-
-    // Player object
-    // function CrawlerPlayer() {
-    //     this.x = Math.floor(Math.random() * (canvas.width -25))
-    //     this.y = Math.floor(Math.random() * (canvas.height - 25))
-    //     this.color = "black"
-    //     this.render = function() {
-    //         ctx.fillStyle = this.color
-    //         ctx.beginPath()
-    //         ctx.arc(this.x, this.y, 12.5 , 0, Math.PI*2)
-    //         ctx.closePath()
-    //         ctx.fill()
-    //     }
-    // }
-
-    // let player = new CrawlerPlayer()
-
-    // player.render()
-
-    // Player movement
-
-    // const movementHandler = (e) => {
-    //     console.log(e.key)
-    //     switch(e.key) {
-    //         case "w":
-    //             player.y -= 6
-    //             break
-    //         case "d":
-    //             player.x += 6
-    //             break
-    //         case "s":
-    //             player.y += 6
-    //             break
-    //         case "a":
-    //             player.x -= 6
-    //             break
-    //     }
-    // }
-    
-    // document.addEventListener("keydown", movementHandler)
