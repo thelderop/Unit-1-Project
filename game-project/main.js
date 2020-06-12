@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let ctx = canvas.getContext("2d")
 
+    let computerArray = []
+    let playerArray = []
+
+    let startingTime = 30
+    let remainingTime = 0
+
     document.getElementById("game-screen").style.visibiliy = "hidden"
     document.getElementById("starting-screen").style.visibility = "visible"
 
@@ -17,67 +23,115 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("starting-screen").style.visibility = "hidden"
         }
 
-    // Target that the player needs to reach
-    function CrawlerTarget() {
-        this.x = Math.floor(Math.random() * (canvas.width -25))
-        this.y = Math.floor(Math.random() * (canvas.height - 25))
-        this.color = "black"
-        this.width = 25
-        this.height = 25
-        this.render = function() {
-            ctx.fillStyle = this.color
-            ctx.fillRect(this.x, this.y, this.width, this.height)
+    // function timer() {
+    //     remainingTime = startingTime
+    //     remainingTime--
+    // }
+
+    function detectRedClick(e) {
+        let x = e.offsetX
+        let y = e.offsetY
+
+        if (x <= redSquare.x + 25 && x >= redSquare.x && y <= redSquare.y + 25 && y >= redSquare.y) {
+            redSquare.dx = 0
+            redSquare.dy = 0
+            playerArray.push(redSquare)
         }
+
+        if (x <= redCircle.x + 25 && x >= redCircle.x && y <= redCircle.y + 25 && y >= redCircle.y) {
+            redCircle.dx = 0
+            redCircle.dy = 0
+            playerArray.push(redCircle)
+        }
+
+        if (x <= redTriangle.x + 25 && x >= redTriangle.x && y <= redTriangle.y + 25 && y >= redTriangle.y) {
+            redTriangle.dx = 0
+            redTriangle.dy = 0
+            playerArray.push(redTriangle)
+        }
+
     }
 
-    let target = new CrawlerTarget()
+    canvas.addEventListener("click", detectRedClick)
 
-    target.render()
+    function detectBlueClick(e) {
+        let x = e.offsetX
+        let y = e.offsetY
 
-    // Player object
-    function CrawlerPlayer() {
-        this.x = Math.floor(Math.random() * (canvas.width -25))
-        this.y = Math.floor(Math.random() * (canvas.height - 25))
-        this.color = "black"
-        this.render = function() {
-            ctx.fillStyle = this.color
-            ctx.beginPath()
-            ctx.arc(this.x, this.y, 12.5 , 0, Math.PI*2)
-            ctx.closePath()
-            ctx.fill()
+        if (x <= blueSquare.x + 25 && x >= blueSquare.x && y <= blueSquare.y + 25 && y >= blueSquare.y) {
+            blueSquare.dx = 0
+            blueSquare.dy = 0
+            playerArray.push(blueSquare)
         }
+
+        if (x <= blueCircle.x + 25 && x >= blueCircle.x && y <= blueCircle.y + 25 && y >= blueCircle.y) {
+            blueCircle.dx = 0
+            blueCircle.dy = 0
+            playerArray.push(blueCircle)
+        }
+
+        if (x <= blueTriangle.x + 25 && x >= blueTriangle.x && y <= blueTriangle.y + 25 && y >= blueTriangle.y) {
+            blueTriangle.dx = 0
+            blueTriangle.dy = 0
+            playerArray.push(blueTriangle)
+        }
+
     }
 
-    let player = new CrawlerPlayer()
+    canvas.addEventListener("click", detectBlueClick)
 
-    player.render()
+    function detectGreenClick(e) {
+        let x = e.offsetX
+        let y = e.offsetY
 
-    // Player movement
-
-    const movementHandler = (e) => {
-        console.log(e.key)
-        switch(e.key) {
-            case "w":
-                // player y decrement
-                player.y -= 6
-                break
-            case "d":
-                // player x increment
-                player.x += 6
-                break
-            case "s":
-                // player y increment
-                player.y += 6
-                break
-            case "a":
-                // player x decrement
-                player.x -= 6
-                break
+        if (x <= greenSquare.x + 25 && x >= greenSquare.x && y <= greenSquare.y + 25 && y >= greenSquare.y) {
+            greenSquare.dx = 0
+            greenSquare.dy = 0
+            playerArray.push(greenSquare)
         }
+
+        if (x <= greenCircle.x + 25 && x >= greenCircle.x && y <= greenCircle.y + 25 && y >= greenCircle.y) {
+            greenCircle.dx = 0
+            greenCircle.dy = 0
+            playerArray.push(greenCircle)
+        }
+
+        if (x <= greenTriangle.x + 25 && x >= greenTriangle.x && y <= greenTriangle.y + 25 && y >= greenTriangle.y) {
+            greenTriangle.dx = 0
+            greenTriangle.dy = 0
+            playerArray.push(greenTriangle)
+        }
+
     }
+
+    canvas.addEventListener("click", detectGreenClick)
+
+    function detectYellowClick(e) {
+        let x = e.offsetX
+        let y = e.offsetY
+
+        if (x <= yellowSquare.x + 25 && x >= yellowSquare.x && y <= yellowSquare.y + 25 && y >= yellowSquare.y) {
+            yellowSquare.dx = 0
+            yellowSquare.dy = 0
+            playerArray.push(yellowSquare)
+        }
+
+        if (x <= yellowCircle.x + 25 && x >= yellowCircle.x && y <= yellowCircle.y + 25 && y >= yellowCircle.y) {
+            yellowCircle.dx = 0
+            yellowCircle.dy = 0
+            playerArray.push(yellowCircle)
+        }
+
+        if (x <= yellowTriangle.x + 25 && x >= yellowTriangle.x && y <= yellowTriangle.y + 25 && y >= yellowTriangle.y) {
+            yellowTriangle.dx = 0
+            yellowTriangle.dy = 0
+            playerArray.push(yellowTriangle)
+        }
+
+    }
+
+    canvas.addEventListener("click", detectYellowClick)
     
-    document.addEventListener("keydown", movementHandler)
-
     // Square constructor
     function CrawlerSquare(color, width, height) {
         this.x = Math.floor(Math.random() * (canvas.width -25))
@@ -87,6 +141,10 @@ document.addEventListener('DOMContentLoaded', function() {
         this.dy = 1
         this.width = width
         this.height = height
+        // this.clicked = function() {
+        //     this.dx = 0
+        //     this.dy = 0
+        // }
         this.render = function() {
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -110,6 +168,10 @@ document.addEventListener('DOMContentLoaded', function() {
         this.color = color
         this.dx = 1
         this.dy = 1
+        this.clicked = function() {
+            this.dx = 0
+            this.dy = 0
+        }
         this.render = function() {
                 ctx.fillStyle = this.color
                 ctx.beginPath()
@@ -128,6 +190,38 @@ document.addEventListener('DOMContentLoaded', function() {
     blueCircle.render()
     greenCircle.render()
     yellowCircle.render()
+
+    // Triangle constructor
+    function CrawlerTriangle(color) {
+        this.x = Math.floor(Math.random() * (canvas.width - 25))
+        this.y = Math.floor(Math.random() * (canvas.height - 25))
+        this.color = color
+        this.dx = 1
+        this.dy = 1
+        this.clicked = function() {
+            this.dx = 0
+            this.dy = 0
+        }
+        this.render = function() {
+            ctx.fillStyle = this.color
+            ctx.beginPath()
+            ctx.moveTo(this.x, this.y)
+            ctx.lineTo(this.x, this.y + 25)
+            ctx.lineTo(this.x + 25, this.y + 25)
+            ctx.closePath()
+            ctx.fill()
+        }
+    }
+
+    let redTriangle = new CrawlerTriangle("red")
+    let blueTriangle = new CrawlerTriangle("blue")
+    let greenTriangle = new CrawlerTriangle("green")
+    let yellowTriangle = new CrawlerTriangle("yellow")
+
+    redTriangle.render()
+    blueTriangle.render()
+    greenTriangle.render()
+    yellowTriangle.render()
 
     function moveRedSquare() {
 
@@ -173,9 +267,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         redSquare.render()
 
-        target.render()
-
-        player.render()
+        redTriangle.render()
+        blueTriangle.render()
+        greenTriangle.render()
+        yellowTriangle.render()
 
     }
 
@@ -487,15 +582,196 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    let gameLoopRedSquare = setInterval(moveRedSquare, 10)
-    let gameLoopBlueSquare = setInterval(moveBlueSquare, 10)
-    let gameLoopGreenSquare = setInterval(moveGreenSquare, 10)
-    let gameLoopYellowSquare = setInterval(moveYellowSquare, 10)
+    function moveRedTriangle() {
 
-    let gameLoopRedCircle = setInterval(moveRedCircle, 10)
-    let gameLoopBlueCircle = setInterval(moveBlueCircle, 10)
-    let gameLoopGreenCircle = setInterval(moveGreenCircle, 10)
-    let gameLoopYellowCircle = setInterval(moveYellowCircle, 10)
+        if (redTriangle.dx === 1) {
+            if (redTriangle.x + 25 >= canvas.width) {
+                redTriangle.dx += -1
+            }
+        } else if (redTriangle.dx === -1) {
+            if (redTriangle.x - 25 <= 0) {
+                redTriangle.dx += 1
+            }
+        }
+        if (redTriangle.x + 25 >= canvas.width) {
+            redTriangle.dx = -1
+        }
+
+        if (redTriangle.x - 25 <= 0) {
+            redTriangle.dx = 1
+        }
+
+        if (redTriangle.dy === 1) {
+            if (redTriangle.y + 25 >= canvas.height) {
+                redTriangle.dy += -1
+            }
+        } else if (redTriangle.dy === -1) {
+            if (redTriangle.y - 25 <= 0) {
+                redTriangle.dy += 1
+            }
+        }
+
+        if (redTriangle.y + 25 >= canvas.height) {
+            redTriangle.dy = -1
+        }
+
+        if (redTriangle.y - 25 <= 0) {
+            redTriangle.dy = 1
+        }
+
+        redTriangle.x += redTriangle.dx
+        redTriangle.y += redTriangle.dy
+
+        redTriangle.render()
+
+    }
+
+    function moveBlueTriangle() {
+
+        if (blueTriangle.dx === 1) {
+            if (blueTriangle.x + 25 >= canvas.width) {
+                blueTriangle.dx += -1
+            }
+        } else if (blueTriangle.dx === -1) {
+            if (blueTriangle.x - 25 <= 0) {
+                blueTriangle.dx += 1
+            }
+        }
+        if (blueTriangle.x + 25 >= canvas.width) {
+            blueTriangle.dx = -1
+        }
+
+        if (blueTriangle.x - 25 <= 0) {
+            blueTriangle.dx = 1
+        }
+
+        if (blueTriangle.dy === 1) {
+            if (blueTriangle.y + 25 >= canvas.height) {
+                blueTriangle.dy += -1
+            }
+        } else if (blueTriangle.dy === -1) {
+            if (blueTriangle.y - 25 <= 0) {
+                blueTriangle.dy += 1
+            }
+        }
+
+        if (blueTriangle.y + 25 >= canvas.height) {
+            blueTriangle.dy = -1
+        }
+
+        if (blueTriangle.y - 25 <= 0) {
+            blueTriangle.dy = 1
+        }
+
+        blueTriangle.x += blueTriangle.dx
+        blueTriangle.y += blueTriangle.dy
+
+        blueTriangle.render()
+
+    }
+
+    function moveGreenTriangle() {
+
+        if (greenTriangle.dx === 1) {
+            if (greenTriangle.x + 25 >= canvas.width) {
+                greenTriangle.dx += -1
+            }
+        } else if (greenTriangle.dx === -1) {
+            if (greenTriangle.x - 25 <= 0) {
+                greenTriangle.dx += 1
+            }
+        }
+        if (greenTriangle.x + 25 >= canvas.width) {
+            greenTriangle.dx = -1
+        }
+
+        if (greenTriangle.x - 25 <= 0) {
+            greenTriangle.dx = 1
+        }
+
+        if (greenTriangle.dy === 1) {
+            if (greenTriangle.y + 25 >= canvas.height) {
+                greenTriangle.dy += -1
+            }
+        } else if (greenTriangle.dy === -1) {
+            if (greenTriangle.y - 25 <= 0) {
+                greenTriangle.dy += 1
+            }
+        }
+
+        if (greenTriangle.y + 25 >= canvas.height) {
+            greenTriangle.dy = -1
+        }
+
+        if (greenTriangle.y - 25 <= 0) {
+            greenTriangle.dy = 1
+        }
+
+        greenTriangle.x += greenTriangle.dx
+        greenTriangle.y += greenTriangle.dy
+
+        greenTriangle.render()
+
+    }
+
+    function moveYellowTriangle() {
+
+        if (yellowTriangle.dx === 1) {
+            if (yellowTriangle.x + 25 >= canvas.width) {
+                yellowTriangle.dx += -1
+            }
+        } else if (yellowTriangle.dx === -1) {
+            if (yellowTriangle.x - 25 <= 0) {
+                yellowTriangle.dx += 1
+            }
+        }
+        if (yellowTriangle.x + 25 >= canvas.width) {
+            yellowTriangle.dx = -1
+        }
+
+        if (yellowTriangle.x - 25 <= 0) {
+            yellowTriangle.dx = 1
+        }
+
+        if (yellowTriangle.dy === 1) {
+            if (yellowTriangle.y + 25 >= canvas.height) {
+                yellowTriangle.dy += -1
+            }
+        } else if (yellowTriangle.dy === -1) {
+            if (yellowTriangle.y - 25 <= 0) {
+                yellowTriangle.dy += 1
+            }
+        }
+
+        if (yellowTriangle.y + 25 >= canvas.height) {
+            yellowTriangle.dy = -1
+        }
+
+        if (yellowTriangle.y - 25 <= 0) {
+            yellowTriangle.dy = 1
+        }
+
+        yellowTriangle.x += yellowTriangle.dx
+        yellowTriangle.y += yellowTriangle.dy
+
+        yellowTriangle.render()
+
+    }
+
+    let gameLoopRedSquare = setInterval(moveRedSquare, 15)
+    let gameLoopBlueSquare = setInterval(moveBlueSquare, 15)
+    let gameLoopGreenSquare = setInterval(moveGreenSquare, 15)
+    let gameLoopYellowSquare = setInterval(moveYellowSquare, 15)
+
+    let gameLoopRedCircle = setInterval(moveRedCircle, 15)
+    let gameLoopBlueCircle = setInterval(moveBlueCircle, 15)
+    let gameLoopGreenCircle = setInterval(moveGreenCircle, 15)
+    let gameLoopYellowCircle = setInterval(moveYellowCircle, 15)
+
+    let gameLoopRedTriangle = setInterval(moveRedTriangle, 15)
+    let gameLoopBlueTriangle = setInterval(moveBlueTriangle, 15)
+    let gameLoopGreenTriangle = setInterval(moveGreenTriangle, 15)
+    let gameLoopYellowTriangle = setInterval(moveYellowTriangle, 15)
 
 })
 
@@ -613,3 +889,60 @@ document.addEventListener('DOMContentLoaded', function() {
         // if (redSquare.y < 0) {
         //     this.dy = -this.dy
         // }
+
+            // Target that the player needs to reach
+    // function CrawlerTarget() {
+    //     this.x = Math.floor(Math.random() * (canvas.width -25))
+    //     this.y = Math.floor(Math.random() * (canvas.height - 25))
+    //     this.color = "black"
+    //     this.width = 25
+    //     this.height = 25
+    //     this.render = function() {
+    //         ctx.fillStyle = this.color
+    //         ctx.fillRect(this.x, this.y, this.width, this.height)
+    //     }
+    // }
+
+    // let target = new CrawlerTarget()
+
+    // target.render()
+
+    // Player object
+    // function CrawlerPlayer() {
+    //     this.x = Math.floor(Math.random() * (canvas.width -25))
+    //     this.y = Math.floor(Math.random() * (canvas.height - 25))
+    //     this.color = "black"
+    //     this.render = function() {
+    //         ctx.fillStyle = this.color
+    //         ctx.beginPath()
+    //         ctx.arc(this.x, this.y, 12.5 , 0, Math.PI*2)
+    //         ctx.closePath()
+    //         ctx.fill()
+    //     }
+    // }
+
+    // let player = new CrawlerPlayer()
+
+    // player.render()
+
+    // Player movement
+
+    // const movementHandler = (e) => {
+    //     console.log(e.key)
+    //     switch(e.key) {
+    //         case "w":
+    //             player.y -= 6
+    //             break
+    //         case "d":
+    //             player.x += 6
+    //             break
+    //         case "s":
+    //             player.y += 6
+    //             break
+    //         case "a":
+    //             player.x -= 6
+    //             break
+    //     }
+    // }
+    
+    // document.addEventListener("keydown", movementHandler)
