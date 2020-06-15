@@ -16,10 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let startButton = document.getElementById("start-button")
 
-    // let restartButton = document.getElementById("play-again")
+    let restartButton = document.getElementById("play-again")
 
     // Starting screen starts visible. Game screen starts hidden
-    document.getElementById("game-screen").style.visibiliy = "hidden"
+    document.getElementById("game-screen").style.visibility = "hidden"
+    document.getElementById("starting-screen").style.visibility = "visible"
 
     // Square constructor, takes color and id as input. Id for array comparison
     function CrawlerSquare(color, id) {
@@ -193,7 +194,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     redCircle, blueCircle, greenCircle, yellowCircle,
                     redTriangle, blueTriangle, greenTriangle, yellowTriangle]
 
-    startButton.addEventListener("click", startGame())
+    startButton.addEventListener("click", startGame)
+
+    restartButton.addEventListener("click", startOver)
+
+    function startOver() {
+        location.reload()
+    }
 
      // Hides starting screen, reveals game screen, calls computerChoice
     function startGame() {
@@ -222,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log(computerArray)
 
+        // Displays computer chocies for five seconds
         function clearSecondCanvas() {
             ctxTwo.clearRect(0, 0, secondCanvas.width, secondCanvas.height)
         }
