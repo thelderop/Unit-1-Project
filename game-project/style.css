@@ -1,5 +1,7 @@
 body {
     text-align: center;
+    background-color: #BCBCBC;
+    font-family: 'Odibee Sans', cursive;
 }
 
 #canvas-container {
@@ -35,6 +37,13 @@ canvas {
     border-bottom: 1.5px solid #DAA520;
 }
 
+#game-screen {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
 #computer-pattern {
     width: 800px;
     height: 150px;
@@ -55,4 +64,12 @@ canvas {
     width: 800px;
     height: 150px;
     background-color: #8B4513;
+}
+
+#start-button {
+    font-family: inherit;
+}
+
+#play-again {
+    font-family: inherit;
 }

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let ctxThree = thirdCanvas.getContext("2d")
 
-    let topRow = document.getElementById("player-pattern")
+    let winMessage = document.getElementById("canvas-container")
 
     let startButton = document.getElementById("start-button")
 
@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let remainingTime = 30
 
     // Starting screen starts visible. Game screen starts hidden
-    document.getElementById("game-screen").style.visibility = "hidden"
-    document.getElementById("starting-screen").style.visibility = "visible"
+    document.getElementById("game-screen").style.display = "none"
+    document.getElementById("starting-screen").style.display = "block"
 
     // Square constructor, takes color and id as input. Id for array comparison
     function CrawlerSquare(color, id) {
@@ -239,49 +239,49 @@ document.addEventListener('DOMContentLoaded', function() {
             ctxTwo.fill()
         }
         this.renderSeven = function() {
-            ctxTwo.fillStyle = this.color
-            ctxTwo.beginPath()
-            ctxTwo.moveTo(80, 75)
-            ctxTwo.lineTo(80, 100)
-            ctxTwo.lineTo(105, 100)
-            ctxTwo.closePath()
-            ctxTwo.fill()
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.moveTo(80, 75)
+            ctxThree.lineTo(80, 100)
+            ctxThree.lineTo(105, 100)
+            ctxThree.closePath()
+            ctxThree.fill()
         }
         this.renderEight = function() {
-            ctxTwo.fillStyle = this.color
-            ctxTwo.beginPath()
-            ctxTwo.moveTo(240, 75)
-            ctxTwo.lineTo(245, 100)
-            ctxTwo.lineTo(265, 100)
-            ctxTwo.closePath()
-            ctxTwo.fill()
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.moveTo(240, 75)
+            ctxThree.lineTo(240, 100)
+            ctxThree.lineTo(265, 100)
+            ctxThree.closePath()
+            ctxThree.fill()
         }
         this.renderNine = function() {
-            ctxTwo.fillStyle = this.color
-            ctxTwo.beginPath()
-            ctxTwo.moveTo(400, 75)
-            ctxTwo.lineTo(400, 100)
-            ctxTwo.lineTo(425, 100)
-            ctxTwo.closePath()
-            ctxTwo.fill()
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.moveTo(400, 75)
+            ctxThree.lineTo(400, 100)
+            ctxThree.lineTo(425, 100)
+            ctxThree.closePath()
+            ctxThree.fill()
         }
         this.renderTen = function() {
-            ctxTwo.fillStyle = this.color
-            ctxTwo.beginPath()
-            ctxTwo.moveTo(560, 75)
-            ctxTwo.lineTo(560, 100)
-            ctxTwo.lineTo(585, 100)
-            ctxTwo.closePath()
-            ctxTwo.fill()
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.moveTo(560, 75)
+            ctxThree.lineTo(560, 100)
+            ctxThree.lineTo(585, 100)
+            ctxThree.closePath()
+            ctxThree.fill()
         }
         this.renderEleven = function() {
-            ctxTwo.fillStyle = this.color
-            ctxTwo.beginPath()
-            ctxTwo.moveTo(720, 75)
-            ctxTwo.lineTo(720, 100)
-            ctxTwo.lineTo(745, 100)
-            ctxTwo.closePath()
-            ctxTwo.fill()
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.moveTo(720, 75)
+            ctxThree.lineTo(720, 100)
+            ctxThree.lineTo(745, 100)
+            ctxThree.closePath()
+            ctxThree.fill()
         }
     }
 
@@ -316,8 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
      // Hides starting screen, reveals game screen, calls computerChoice
     function startGame() {
-        document.getElementById("game-screen").style.visibility = "visible"
-        document.getElementById("starting-screen").style.visibility = "hidden"
+        document.getElementById("game-screen").style.display = "block"
+        document.getElementById("starting-screen").style.display = "none"
 
         computerChoice()
 
@@ -375,9 +375,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             if (score === 5) {
-                topRow.innerText = "Player wins!"
+                winMessage.innerText = "Player wins!"
             } else {
-                topRow.innerText = "Player loses!"
+                winMessage.innerText = "Player loses!"
             }
         }
     }
