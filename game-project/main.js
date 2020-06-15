@@ -12,11 +12,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let ctxTwo = secondCanvas.getContext("2d")
 
+    let thirdCanvas = document.getElementById("third-canvas")
+        thirdCanvas.width = 800
+        thirdCanvas.height = 150
+
+    let ctxThree = thirdCanvas.getContext("2d")
+
     let topRow = document.getElementById("player-pattern")
 
     let startButton = document.getElementById("start-button")
 
     let restartButton = document.getElementById("play-again")
+
+    let timer = document.getElementById("timer")
+
+    let remainingTime = 30
 
     // Starting screen starts visible. Game screen starts hidden
     document.getElementById("game-screen").style.visibility = "hidden"
@@ -33,6 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         this.width = 25
         this.height = 25
         this.render = function() {
+            ctx.shadowColor = "black"
+            ctx.shadowBlur = 15
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
@@ -55,6 +67,26 @@ document.addEventListener('DOMContentLoaded', function() {
         this.renderSix = function() {
             ctxTwo.fillStyle = this.color
             ctxTwo.fillRect(720, 75, this.width, this.height)
+        }
+        this.renderSeven = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.fillRect(80, 75, this.width, this.height)
+        }
+        this.renderEight = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.fillRect(240, 75, this.width, this.height)
+        }
+        this.renderNine = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.fillRect(400, 75, this.width, this.height)
+        }
+        this.renderTen = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.fillRect(560, 75, this.width, this.height)
+        }
+        this.renderEleven = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.fillRect(720, 75, this.width, this.height)
         }
     }
 
@@ -107,6 +139,41 @@ document.addEventListener('DOMContentLoaded', function() {
             ctxTwo.arc(720, 75, 12.5 , 0, Math.PI*2)
             ctxTwo.closePath()
             ctxTwo.fill()
+        }
+        this.renderSeven = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.arc(80, 75, 12.5 , 0, Math.PI*2)
+            ctxThree.closePath()
+            ctxThree.fill()
+        }
+        this.renderEight = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.arc(240, 75, 12.5 , 0, Math.PI*2)
+            ctxThree.closePath()
+            ctxThree.fill()
+        }
+        this.renderNine = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.arc(400, 75, 12.5 , 0, Math.PI*2)
+            ctxThree.closePath()
+            ctxThree.fill()
+        }
+        this.renderTen = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.arc(560, 75, 12.5 , 0, Math.PI*2)
+            ctxThree.closePath()
+            ctxThree.fill()
+        }
+        this.renderEleven = function() {
+            ctxThree.fillStyle = this.color
+            ctxThree.beginPath()
+            ctxThree.arc(720, 75, 12.5 , 0, Math.PI*2)
+            ctxThree.closePath()
+            ctxThree.fill()
         }
     }
     // Triangle constructor, takes color and id as input. Id for array comparison
@@ -171,6 +238,51 @@ document.addEventListener('DOMContentLoaded', function() {
             ctxTwo.closePath()
             ctxTwo.fill()
         }
+        this.renderSeven = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(80, 75)
+            ctxTwo.lineTo(80, 100)
+            ctxTwo.lineTo(105, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderEight = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(240, 75)
+            ctxTwo.lineTo(245, 100)
+            ctxTwo.lineTo(265, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderNine = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(400, 75)
+            ctxTwo.lineTo(400, 100)
+            ctxTwo.lineTo(425, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderTen = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(560, 75)
+            ctxTwo.lineTo(560, 100)
+            ctxTwo.lineTo(585, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderEleven = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(720, 75)
+            ctxTwo.lineTo(720, 100)
+            ctxTwo.lineTo(745, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
     }
 
     let redSquare = new CrawlerSquare("red", "1")
@@ -208,6 +320,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("starting-screen").style.visibility = "hidden"
 
         computerChoice()
+
+        setInterval(updateClock, 1000)
+    }
+
+    // Timer counts down from 30 to zero
+    function updateClock() {
+        timer.textContent = remainingTime
+        if (remainingTime > 0) {
+            remainingTime--
+        } else {
+            timer.textContent = "0"
+        }
     }
 
     // Computer randomly selects five elements (shapes) of gameArray and stores them in computerArray
@@ -337,6 +461,13 @@ document.addEventListener('DOMContentLoaded', function() {
             yellowTriangle.dy = 0
             playerArray.push(yellowTriangle)
         }
+
+        // Rendering the shapes in the top canvas where player choses are displayed
+        playerArray[0].renderSeven()
+        playerArray[1].renderEight()
+        playerArray[2].renderNine()
+        playerArray[3].renderTen()
+        playerArray[4].renderEleven()
 
         endGame()
 
