@@ -14,11 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let topRow = document.getElementById("player-pattern")
 
-    let startButton = document.querySelector("button")
+    let startButton = document.getElementById("start-button")
+
+    // let restartButton = document.getElementById("play-again")
 
     // Starting screen starts visible. Game screen starts hidden
-    // document.getElementById("game-screen").style.visibiliy = "visible"
-    // document.getElementById("starting-screen").style.visibility = "hidden"
+    document.getElementById("game-screen").style.visibiliy = "hidden"
 
     // Square constructor, takes color and id as input. Id for array comparison
     function CrawlerSquare(color, id) {
@@ -33,6 +34,26 @@ document.addEventListener('DOMContentLoaded', function() {
         this.render = function() {
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+        this.renderTwo = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.fillRect(80, 75, this.width, this.height)
+        }
+        this.renderThree = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.fillRect(240, 75, this.width, this.height)
+        }
+        this.renderFour = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.fillRect(400, 75, this.width, this.height)
+        }
+        this.renderFive = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.fillRect(560, 75, this.width, this.height)
+        }
+        this.renderSix = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.fillRect(720, 75, this.width, this.height)
         }
     }
 
@@ -51,7 +72,41 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.closePath()
             ctx.fill()
         }
-
+        this.renderTwo = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.arc(80, 75, 12.5 , 0, Math.PI*2)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderThree = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.arc(240, 75, 12.5 , 0, Math.PI*2)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderFour = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.arc(400, 75, 12.5 , 0, Math.PI*2)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderFive = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.arc(560, 75, 12.5 , 0, Math.PI*2)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderSix = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.arc(720, 75, 12.5 , 0, Math.PI*2)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
     }
     // Triangle constructor, takes color and id as input. Id for array comparison
     function CrawlerTriangle(color, id) {
@@ -69,6 +124,51 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.lineTo(this.x + 25, this.y + 25)
             ctx.closePath()
             ctx.fill()
+        }
+        this.renderTwo = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(80, 75)
+            ctxTwo.lineTo(80, 100)
+            ctxTwo.lineTo(105, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderThree = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(240, 75)
+            ctxTwo.lineTo(240, 100)
+            ctxTwo.lineTo(265, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderFour = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(400, 75)
+            ctxTwo.lineTo(400, 100)
+            ctxTwo.lineTo(425, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderFive = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(560, 75)
+            ctxTwo.lineTo(560, 100)
+            ctxTwo.lineTo(585, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
+        }
+        this.renderSix = function() {
+            ctxTwo.fillStyle = this.color
+            ctxTwo.beginPath()
+            ctxTwo.moveTo(720, 75)
+            ctxTwo.lineTo(720, 100)
+            ctxTwo.lineTo(745, 100)
+            ctxTwo.closePath()
+            ctxTwo.fill()
         }
     }
 
@@ -95,6 +195,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     startButton.addEventListener("click", startGame())
 
+     // Hides starting screen, reveals game screen, calls computerChoice
+    function startGame() {
+        document.getElementById("game-screen").style.visibility = "visible"
+        document.getElementById("starting-screen").style.visibility = "hidden"
+
+        computerChoice()
+    }
+
     // Computer randomly selects five elements (shapes) of gameArray and stores them in computerArray
     function computerChoice() {
         // Checks to make sure there are no repeated elements
@@ -104,17 +212,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 computerArray.push(randomChoice)
             }
         }
-        // ctxTwo.
-        console.log(computerArray)
-    }
-        
-    // Hides starting screen, reveals game screen, calls computerChoice
-    function startGame() {
-            // document.getElementById("game-screen").style.visibility = "visible"
-            // document.getElementById("starting-screen").style.visibility = "hidden"
+        // Display randomly selected array elements in the second canvas
+        // This allows the player to see the pattern the computer chose
+        computerArray[0].renderTwo()
+        computerArray[1].renderThree()
+        computerArray[2].renderFour()
+        computerArray[3].renderFive()
+        computerArray[4].renderSix()
 
-            computerChoice()
+        console.log(computerArray)
+
+        function clearSecondCanvas() {
+            ctxTwo.clearRect(0, 0, secondCanvas.width, secondCanvas.height)
         }
+    
+        setTimeout(clearSecondCanvas, 5000)
+    }
 
     // Check if player array length equals length of computer array
     // If they are same length, compare them
@@ -127,14 +240,12 @@ document.addEventListener('DOMContentLoaded', function() {
             for (i = 0; i < 5; i++) {
                 if (playerArray[i].id === computerArray[i].id) {
                     score++
-                } else {
-                    console.log("Player loses!")
-                    topRow.innerText = "Player loses!"
                 }
             }
             if (score === 5) {
-                console.log("Player wins")
                 topRow.innerText = "Player wins!"
+            } else {
+                topRow.innerText = "Player loses!"
             }
         }
     }
@@ -158,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
             redCircle.dy = 0
             playerArray.push(redCircle)
         }
-        // Red Triangle click
+        // Red triangle click
         if (x <= redTriangle.x + 25 && x >= redTriangle.x && y <= redTriangle.y + 25 && y >= redTriangle.y) {
             redTriangle.dx = 0
             redTriangle.dy = 0
